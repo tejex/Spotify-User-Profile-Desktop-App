@@ -125,6 +125,7 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 });
+app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors');
 
 app.whenReady()
     .then(() => {
