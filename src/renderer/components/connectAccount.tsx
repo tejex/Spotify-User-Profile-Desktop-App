@@ -19,6 +19,7 @@ theme = responsiveFontSizes(theme);
 
 const ConnectAccount = () => {
     const [leetcodeURL, setUrl] = useState('');
+    const [isLoading, setLoading] = useState(false);
     const dispatch = useDispatch();
 
     const handleChange = (
@@ -29,14 +30,21 @@ const ConnectAccount = () => {
     };
 
     const fetchUserData = async (username: string) => {
+        console.log(username);
+        setLoading(true);
+        // use the useSelector hook to find out if the username is already in redux
+        // if it is then no need to call the API again, just retrieve it and return from this
         await axios
             .get(`https://alfa-leetcode-api.onrender.com/${username}`)
             .then((res) => {
                 const userData = res.data;
+                console.log(userData);
+
                 if (res.status == 200) {
                     //store in redux, grab from redux in other page
                     dispatch(setCurrentUser({ username: username }));
                     dispatch(addUser({ username, data: userData }));
+                    setLoading(false);
                 }
             })
             .catch((err) => console.error('Error fetching user data:', err));
@@ -59,7 +67,8 @@ const ConnectAccount = () => {
                     sx={{ marginBottom: '5%' }}
                     fullWidth
                 />
-                <NavLink to="/userProfile">
+                {/* <NavLink to="/userProfile"> */}
+                <div className="button-container">
                     <Button
                         variant="contained"
                         className="LoginButton"
@@ -69,7 +78,9 @@ const ConnectAccount = () => {
                     >
                         Retrieve Data
                     </Button>
-                </NavLink>
+                    <div className={isLoading ? 'loading-dot' : 'dot'}></div>
+                    {/* </NavLink> */}
+                </div>
             </form>
         </div>
     );
