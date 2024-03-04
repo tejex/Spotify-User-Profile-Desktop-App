@@ -13,11 +13,13 @@ interface User {
 
 interface APIState {
     currentUser: string;
-    users: { [username: string]: User }; // Map usernames to user objects
+    loading: boolean;
+    users: { [username: string]: User };
 }
 
 const initialState: APIState = {
     currentUser: '',
+    loading: true,
     users: {},
 };
 
@@ -25,6 +27,9 @@ const userSlice = createSlice({
     name: 'users', // More descriptive name
     initialState,
     reducers: {
+        setLoading(state, action: { payload: boolean }) {
+            state.loading = action.payload;
+        },
         setCurrentUser(state, action: { payload: { username: string } }) {
             const { username } = action.payload;
             state.currentUser = username; // Add user data to the state
@@ -44,10 +49,18 @@ const userSlice = createSlice({
 });
 
 const selectUsers = (state: RootState) => state.users;
-//Write Selector Methods to grab info from the redux store
+const selectLoading = (state: RootState) => state;
 
-export { selectUsers };
-export const { addUser, updateUser, setCurrentUser } = userSlice.actions;
+const userData = createSelector([selectUsers], (data) => {
+    return data.users[data.currentUser];
+});
+const isLoading = createSelector([selectLoading], (data) => {
+    return data.users.loading;
+});
+
+export { selectUsers, userData, User, isLoading };
+export const { addUser, updateUser, setCurrentUser, setLoading } =
+    userSlice.actions;
 
 const store = configureStore({
     reducer: {

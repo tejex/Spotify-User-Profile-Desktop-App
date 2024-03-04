@@ -4,21 +4,35 @@
  */
 body {
   position: relative;
-  color: white;
   height: 100vh;
   background: lightgray;
   font-family: sans-serif;
   overflow-y: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
 }
 
 .button-container {
   display: flex;
   align-items: center;
 }
-
+.avatar{
+  border-radius: 20%;
+}
+.profileHeader{
+  display:flex;
+  justify-content:space-evenly;
+  width: 100%;
+}
+.userProfile{
+  width: 100%;
+  margin-left: 5%;
+  margin-top: 5%;
+  text-decoration: whitesmoke;
+}
+.profileUserAndName{
+  margin-left: 5%;
+  width: 100%;
+}
 .loading-dot {
   width: 10px;
   height: 10px;
