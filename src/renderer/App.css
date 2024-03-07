@@ -33,6 +33,9 @@ body {
   margin-left: 5%;
   width: 100%;
 }
+.userIconComponent{
+  display: flex;
+}
 .loading-dot {
   width: 10px;
   height: 10px;
