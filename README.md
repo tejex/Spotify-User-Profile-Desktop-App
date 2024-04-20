@@ -1,13 +1,14 @@
-LeetCode Electron Dashboard
-This is a desktop application that displays your LeetCode progress in a user-friendly dashboard.
+Spotify User Insights Desktop App
 
-What it does
+What it does:
 
-Enter your LeetCode username.
-The app fetches your data and displays it in a convenient dashboard format.
-You can see your solved problems, their difficulty levels, submission history, and more!
-Benefits
+Log in with your Spotify account credentials.
+The app retrieves your listening history and presents it in an intuitive dashboard layout.
+Explore your most frequently played artists and tracks, along with their genres and popularity.
+Gain insights into your music preferences, including trends over time (planned for future updates).
 
-Get a clear overview of your LeetCode progress at a glance.
-Analyze your strengths and weaknesses in different problem difficulties.
-Track your progress over time (planned for future updates).
+Benefits:
+
+Effortlessly track and visualize your listening habits with a user-friendly dashboard.
+Identify your favorite artists, genres, and songs, enabling deeper analysis of your musical preferences.
+
