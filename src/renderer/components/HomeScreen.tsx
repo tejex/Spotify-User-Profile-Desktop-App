@@ -1,14 +1,21 @@
 import React from 'react'
 import { Button } from '@mui/material'
+import axios from 'axios'
 
 export const HomeScreen = () => {
+    const login = () => {
+        axios.get('http://localhost:5001/login').then((response) => {
+            console.log(response)
+        })
+    }
+
     return (
         <div className="homeScreen">
             <h1 className="header">Spotify User Insights 🪄</h1>
             <Button
                 className="loginButton"
                 onClick={() => {
-                    console.log('Login was clicked')
+                    login()
                 }}
                 size="large"
                 sx={{

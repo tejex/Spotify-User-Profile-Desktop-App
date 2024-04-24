@@ -1,14 +1,13 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
-import './App.css';
-import {HomeScreen} from './components/HomeScreen';
+import { MemoryRouter as Router, Routes, Route } from 'react-router-dom'
+import './App.css'
+import { HomeScreen } from './components/HomeScreen'
 
-import { Provider } from 'react-redux';
-import store from './store/store';
+import { Provider } from 'react-redux'
+import store from './store/store'
 
 export default function App() {
     return (
-        <div className='app'>
+        <div className="app">
             <Provider store={store}>
                 <Router>
                     <Routes>
@@ -17,5 +16,5 @@ export default function App() {
                 </Router>
             </Provider>
         </div>
-    );
+    )
 }
