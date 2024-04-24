@@ -2,64 +2,37 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
-body {
-  position: relative;
-  height: 100vh;
-  background: lightgray;
+ body {
+  margin: 0; /* Reset default margin */
+  overflow: hidden; /* Hide scrollbars */
+}
+
+.app {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw; /* Take full viewport width */
+  height: 100vh; /* Take full viewport height */
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
   font-family: sans-serif;
   overflow-y: hidden;
-
 }
 
-.button-container {
-  display: flex;
-  align-items: center;
+.homeScreen{
+  width: 100vh;
+  height: 100vh;
 }
-.avatar{
-  border-radius: 20%;
-}
-.profileHeader{
-  display:flex;
-  justify-content:space-evenly;
+
+.header{
+  margin-left:27%;
   width: 100%;
 }
-.userProfile{
-  width: 100%;
-  margin-left: 5%;
-  margin-top: 5%;
-  text-decoration: whitesmoke;
-}
-.profileUserAndName{
-  margin-left: 5%;
-  width: 100%;
-}
-.userIconComponent{
-  display: flex;
-}
-.loading-dot {
-  width: 10px;
-  height: 10px;
-  background-color: #3498db; /* Adjust color as needed */
-  border-radius: 50%;
-  animation: pulsate 1s ease-in-out infinite;
-  margin-left: 10px; /* Adjust spacing as needed */
-}
 
-@keyframes pulsate {
-  0% {
-    transform: scale(0.5);
-  }
-  50% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0.5);
-  }
-}
-
-.Title{
-  color: black;
-}
-.loginForm{
-  margin-top: 15%;
+.loginButton:hover,
+.loginButton:focus {
+  text-decoration: none;
 }
