@@ -5,6 +5,10 @@ import { HomeScreen } from './components/HomeScreen'
 import { Provider } from 'react-redux'
 import store from './store/store'
 
+function MainPage() {
+    return <div>hi</div>
+}
+
 export default function App() {
     return (
         <div className="app">
@@ -12,6 +16,7 @@ export default function App() {
                 <Router>
                     <Routes>
                         <Route path="/" element={<HomeScreen />} />
+                        {/* <Route path="/mainPage" element={<MainPage />} /> */}
                     </Routes>
                 </Router>
             </Provider>

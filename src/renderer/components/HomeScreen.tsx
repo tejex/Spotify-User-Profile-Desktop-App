@@ -4,9 +4,7 @@ import axios from 'axios'
 
 export const HomeScreen = () => {
     const login = () => {
-        axios.get('http://localhost:5001/login').then((response) => {
-            console.log(response)
-        })
+        window.electronAPI.initiateSpotifyLogin()
     }
 
     return (
