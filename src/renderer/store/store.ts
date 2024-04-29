@@ -1,73 +1,63 @@
-import { configureStore, createSlice } from '@reduxjs/toolkit';
-import { createSelector } from '@reduxjs/toolkit';
-interface User {
-    name: string;
-    username: string;
-    about?: string;
-    avatar?: string;
-    ranking: number;
-    gitHub?: string;
-    reputation: number;
-    linkedIn?: string;
-}
+import { configureStore, createSlice } from '@reduxjs/toolkit'
+import { UserProfileType } from '../components/UserProfilePage'
+import { createSelector } from '@reduxjs/toolkit'
 
+interface TokensState {
+    accessToken: string
+    refreshToken: string
+    expiresIn: string
+}
 interface APIState {
-    currentUser: string;
-    loading: boolean;
-    users: { [username: string]: User };
+    userData: UserProfileType | string
+    tokens: TokensState
 }
 
 const initialState: APIState = {
-    currentUser: '',
-    loading: true,
-    users: {},
-};
+    userData: {
+        country: '',
+        display_name: '',
+        email: '',
+        followers: {
+            total: 0,
+            hfref: null,
+        },
+        href: '',
+        id: '',
+        images: [{ url: '', height: 0, width: 0 }],
+        product: '',
+        type: '',
+        uri: '',
+    },
+    tokens: {
+        accessToken: '',
+        refreshToken: '',
+        expiresIn: '',
+    },
+}
 
-const userSlice = createSlice({
-    name: 'users', // More descriptive name
+const tokens = createSlice({
+    name: 'tokens',
     initialState,
     reducers: {
-        setLoading(state, action: { payload: boolean }) {
-            state.loading = action.payload;
+        setTokens(state, action) {
+            state.tokens = action.payload
         },
-        setCurrentUser(state, action: { payload: { username: string } }) {
-            const { username } = action.payload;
-            state.currentUser = username; // Add user data to the state
-        },
-        addUser(state, action: { payload: { username: string; data: User } }) {
-            const { username, data } = action.payload;
-            state.users[username] = data; // Add user data to the state
-        },
-        updateUser(
-            state,
-            action: { payload: { username: string; data: Partial<User> } },
-        ) {
-            const { username, data } = action.payload;
-            state.users[username] = { ...state.users[username], ...data };
+        setUser(state, action: { payload: UserProfileType }) {
+            state.userData = action.payload
         },
     },
-});
+})
 
-const selectUsers = (state: RootState) => state.users;
-const selectLoading = (state: RootState) => state;
-
-const userData = createSelector([selectUsers], (data) => {
-    return data.users[data.currentUser];
-});
-const isLoading = createSelector([selectLoading], (data) => {
-    return data.users.loading;
-});
-
-export { selectUsers, userData, User, isLoading };
-export const { addUser, updateUser, setCurrentUser, setLoading } =
-    userSlice.actions;
-
+const selectTokens = (state: RootState) => state.tokens
+const selectUser = (state: RootState) => state.tokens.userData
+export { selectTokens, selectUser }
+export const { setTokens, setUser } = tokens.actions
 const store = configureStore({
     reducer: {
-        users: userSlice.reducer,
+        tokens: tokens.reducer,
     },
-});
+})
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-export default store;
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export default store

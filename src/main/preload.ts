@@ -26,6 +26,7 @@ const electronHandler = {
         },
     },
 }
+
 const CLIENT_ID = '-'
 const CLIENT_SECRET = '-'
 
@@ -35,6 +36,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
             spotifyClientId: CLIENT_ID,
             spotifySecret: CLIENT_SECRET,
         }),
+    retrieveData: () => {
+        return ipcRenderer.invoke('send-data')
+    },
+    backToLoginPage: () => {
+        ipcRenderer.invoke('log-out')
+    },
 })
 
 contextBridge.exposeInMainWorld('electron', electronHandler)

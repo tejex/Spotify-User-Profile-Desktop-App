@@ -8,6 +8,9 @@ import MenuBuilder from './menu'
 import { resolveHtmlPath } from './util'
 import { stringify } from 'querystring'
 import { generateRandomString } from '../../server'
+import axios from 'axios'
+import Store from 'electron-store'
+import { ipcRenderer } from 'electron/renderer'
 
 class AppUpdater {
     constructor() {
@@ -18,6 +21,7 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null
+export const store = new Store()
 
 ipcMain.on('ipc-example', async (event, arg) => {
     const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`
@@ -134,6 +138,7 @@ protocol.registerSchemesAsPrivileged([
 app.setAsDefaultProtocolClient('oauthdesktop')
 
 const CLIENT_ID = '-'
+const CLIENT_SECRET = '-'
 const REDIRECT_URI = 'oauthdesktop://callback'
 
 ipcMain.on('spotify-login', (e, arg) => {
@@ -154,6 +159,14 @@ ipcMain.on('spotify-login', (e, arg) => {
     shell.openExternal(authUrl)
 })
 
+ipcMain.handle('log-out', () => {
+    return ''
+})
+
+let accessToken: string = ''
+let refreshToken: string = ''
+let expiresIn: string = ''
+
 app.whenReady()
     .then(() => {
         createWindow()
@@ -161,14 +174,56 @@ app.whenReady()
         app.on('activate', () => {
             if (mainWindow === null) createWindow()
         })
-        app.on('open-url', (event, url) => {
-            event.preventDefault()
-            // Parse the URL to extract the authorization code
+        app.on('open-url', async (event, url) => {
+            event.preventDefault() // Prevent default behavior
+
             const urlObj = new URL(url)
             const code = urlObj.searchParams.get('code')
-            console.log('made it here bhai')
-            // Now you can use the code to request an access token
-            // This is a simplified example; you'll need to handle errors and edge cases
+
+            try {
+                const response = await axios.post(
+                    'https://accounts.spotify.com/api/token',
+                    stringify({
+                        grant_type: 'authorization_code',
+                        code: code,
+                        redirect_uri: REDIRECT_URI,
+                    }),
+                    {
+                        headers: {
+                            'content-type': 'application/x-www-form-urlencoded',
+                            Authorization: `Basic ${Buffer.from(
+                                `${CLIENT_ID}:${CLIENT_SECRET}`
+                            ).toString('base64')}`,
+                        },
+                    }
+                )
+
+                if (response.status === 200) {
+                    const { access_token, refresh_token, expires_in } =
+                        response.data
+
+                    accessToken = access_token
+                    refreshToken = refresh_token
+                    expiresIn = expires_in
+                } else {
+                    console.error(
+                        'Error retrieving access token:',
+                        response.status,
+                        response.statusText
+                    )
+                }
+            } catch (error) {
+                console.error('Error retrieving access token:', error)
+            }
         })
+
+        const sendData = () => {
+            return {
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+                expiresIn: expiresIn,
+            }
+        }
+        ipcMain.handle('send-data', sendData)
     })
     .catch(console.log)

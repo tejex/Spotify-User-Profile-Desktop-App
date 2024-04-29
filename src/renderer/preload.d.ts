@@ -6,6 +6,12 @@ declare global {
         electron: ElectronHandler
         electronAPI: {
             initiateSpotifyLogin: () => void
+            retrieveData: () => {
+                expiresIn: string
+                accessToken: string
+                refreshToken: string
+            }
+            backToLoginPage: () => string
         }
     }
 }
