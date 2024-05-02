@@ -12,3 +12,4 @@ Benefits:
 Effortlessly track and visualize your listening habits with a user-friendly dashboard.
 Identify your favorite artists, genres, and songs, enabling deeper analysis of your musical preferences.
 
+<img width="953" alt="spotifyDesktop1" src="https://github.com/tejex/Spotify-User-Profile-Desktop-App/assets/91570985/83dd0d7f-b114-4ee0-9499-83092bb87a6c">
