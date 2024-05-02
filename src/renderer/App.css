@@ -2,37 +2,53 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
- body {
-  margin: 0; /* Reset default margin */
-  overflow: hidden; /* Hide scrollbars */
+ html, body {
+  width: 100%;
+  height: 1200px;
+  margin: 0;
+  padding: 0;
 }
 
 .app {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw; /* Take full viewport width */
-  height: 100vh; /* Take full viewport height */
+  padding: 5%;
+  width: 900px; /* Take full viewport width */
+  height: 1200px; /* Take full viewport height */
   background-color: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   color: white;
   font-family: sans-serif;
-  overflow-y: hidden;
-}
 
-.homeScreen{
-  width: 100vh;
-  height: 100vh;
 }
-
-.header{
-  margin-left:27%;
-  width: 100%;
+.userProfilePage{
+  margin-top: 5%;
 }
-
-.loginButton:hover,
-.loginButton:focus {
-  text-decoration: none;
+.profileHeader{
+  display: flex;
+  gap:2%;
+}
+.profileImage{
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+}
+.profileInsights{
+  height: 200px;
+  margin-top: 5%;
+}
+.playlistInsights{
+  height: 500px;
+  margin-top: 5%;
+}
+.topPlaylists{
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.playlistImage,.artistImage{
+  height: 65%;
+  width: 70%;
+}
+.artistImage{
+  border-radius: 100%;
+}
+.playlistInsights{
+  margin-top: 7%;
 }

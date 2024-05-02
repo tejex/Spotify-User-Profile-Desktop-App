@@ -1,7 +1,5 @@
 import axios from 'axios'
-import { setTokens } from './store/store'
-import { timeStamp } from 'console'
-import { useDispatch } from 'react-redux'
+import { UserProfileType } from './interfaces/interfaces'
 
 const LOCALSTORAGE_KEYS = {
     accessToken: 'accessToken',
@@ -50,9 +48,71 @@ export const logout = () => {
     }
 }
 //************************************************************************************/
+export const tokensTemplate = {
+    accessToken: '',
+    refreshToken: '',
+    expiresIn: '',
+}
+
+export const userTemplate = {
+    country: '',
+    display_name: '',
+    email: '',
+    followers: {
+        total: 0,
+        hfref: null,
+    },
+    href: '',
+    id: '',
+    images: [{ url: '', height: 0, width: 0 }],
+    product: '',
+    type: '',
+    uri: '',
+} as UserProfileType
+
+//************************************************************************************/
 export const getCurrentUserProfile = async (accessToken: string) => {
     axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`
     axios.defaults.baseURL = 'https://api.spotify.com/v1'
     axios.defaults.headers['Content-Type'] = 'application/json'
     return axios.get('/me')
+}
+
+export const getUserTopArtists = (
+    accessToken: string,
+    time_range = 'short_term'
+) => {
+    axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`
+    axios.defaults.baseURL = 'https://api.spotify.com/v1'
+    axios.defaults.headers['Content-Type'] = 'application/json'
+    return axios.get(`/me/top/artists?time_range=${time_range}`)
+}
+
+export const getUserTopTracks = (
+    accessToken: string,
+    time_range = 'short_term'
+) => {
+    axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`
+    axios.defaults.baseURL = 'https://api.spotify.com/v1'
+    axios.defaults.headers['Content-Type'] = 'application/json'
+    return axios.get(`me/top/tracks?time_range=${time_range}`)
+}
+
+export const getUserPlaylists = (limit = 10, accessToken: string) => {
+    axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`
+    axios.defaults.baseURL = 'https://api.spotify.com/v1'
+    axios.defaults.headers['Content-Type'] = 'application/json'
+    return axios.get(`/me/playlists?limit=${limit}`)
+}
+
+export const getTopItems = (
+    limit = 5,
+    accessToken: string,
+    type: string,
+    time_range = 'short_term'
+) => {
+    axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`
+    axios.defaults.baseURL = 'https://api.spotify.com/v1'
+    axios.defaults.headers['Content-Type'] = 'application/json'
+    return axios.get('me/top/artists?time_range=short_term&limit=5')
 }

@@ -1,9 +1,10 @@
 import './App.css'
-
 import { logout } from './utils'
 import { UserProfile } from './components/UserProfilePage'
 import { useDispatch, useSelector } from 'react-redux'
-import { setTokens, selectTokens } from './store/store'
+import { setTokens, selectTokens, setUser } from './store/store'
+import { Button } from '@mui/material'
+import { tokensTemplate, userTemplate } from './utils'
 
 export default function App() {
     const authData = useSelector(selectTokens)
@@ -16,7 +17,6 @@ export default function App() {
         setTimeout(async () => {
             try {
                 tokenData = await window.electronAPI.retrieveData()
-
                 const { accessToken, refreshToken, expiresIn } = tokenData
 
                 localStorage.setItem('accessToken', accessToken)
@@ -36,7 +36,7 @@ export default function App() {
             {!authData || authData.tokens.accessToken == '' ? (
                 <div className="homeScreen">
                     <h1 className="header">Spotify User Insights🪄</h1>
-                    <button
+                    <Button
                         className="loginButton"
                         onClick={() => {
                             login()
@@ -45,35 +45,41 @@ export default function App() {
                             width: 400,
                             height: 60,
                             textTransform: 'none',
+                            marginLeft: '14%',
+                            marginTop: '15%',
+                            backgroundColor: 'green',
                         }}
+                        variant="contained"
                     >
                         Login
-                    </button>
+                    </Button>
                 </div>
             ) : (
-                <>
-                    <button
-                        className="loginButton"
-                        onClick={() => {
-                            logout()
-                            dispatch(
-                                setTokens({
-                                    accessToken: '',
-                                    refreshToken: '',
-                                    expiresIn: '',
-                                })
-                            )
-                        }}
-                        style={{
-                            width: 400,
-                            height: 60,
-                            textTransform: 'none',
-                        }}
-                    >
-                        Logout
-                    </button>
-                    <UserProfile />
-                </>
+                <div className="currentUserPage">
+                    <div className="logoutButton">
+                        <Button
+                            className="loginButton"
+                            onClick={() => {
+                                dispatch(setTokens(tokensTemplate))
+                                dispatch(setUser(userTemplate))
+                                logout()
+                            }}
+                            style={{
+                                width: 200,
+                                height: 20,
+                                textTransform: 'none',
+                                backgroundColor: 'green',
+                                color: 'white',
+                            }}
+                            variant="contained"
+                        >
+                            Logout
+                        </Button>
+                    </div>
+                    <div className="userProfile">
+                        <UserProfile />
+                    </div>
+                </div>
             )}
         </div>
     )

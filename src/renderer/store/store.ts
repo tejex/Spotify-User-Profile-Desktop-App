@@ -1,6 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
-import { UserProfileType } from '../components/UserProfilePage'
-import { createSelector } from '@reduxjs/toolkit'
+import { UserProfileType } from '../interfaces/interfaces'
+import { userTemplate, tokensTemplate } from '../utils'
 
 interface TokensState {
     accessToken: string
@@ -13,26 +13,8 @@ interface APIState {
 }
 
 const initialState: APIState = {
-    userData: {
-        country: '',
-        display_name: '',
-        email: '',
-        followers: {
-            total: 0,
-            hfref: null,
-        },
-        href: '',
-        id: '',
-        images: [{ url: '', height: 0, width: 0 }],
-        product: '',
-        type: '',
-        uri: '',
-    },
-    tokens: {
-        accessToken: '',
-        refreshToken: '',
-        expiresIn: '',
-    },
+    userData: userTemplate,
+    tokens: tokensTemplate,
 }
 
 const tokens = createSlice({

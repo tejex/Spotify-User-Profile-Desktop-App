@@ -10,7 +10,6 @@ import { stringify } from 'querystring'
 import { generateRandomString } from '../../server'
 import axios from 'axios'
 import Store from 'electron-store'
-import { ipcRenderer } from 'electron/renderer'
 
 class AppUpdater {
     constructor() {
@@ -70,9 +69,11 @@ const createWindow = async () => {
     mainWindow = new BrowserWindow({
         show: false,
         width: 1000,
-        maxHeight: 800,
+        height: 600,
+        maxHeight: 1200,
         maxWidth: 1000,
-        height: 800,
+        minWidth: 1000,
+        minHeight: 600,
         icon: getAssetPath('icon.png'),
         webPreferences: {
             preload: app.isPackaged
