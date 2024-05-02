@@ -27,8 +27,8 @@ const electronHandler = {
     },
 }
 
-const CLIENT_ID = '-'
-const CLIENT_SECRET = '-'
+const CLIENT_ID = 'ec4827be6c584734b93bdf3a0da374d8'
+const CLIENT_SECRET = 'dbd7d7e2f486437baa9997a679d8cf20'
 
 contextBridge.exposeInMainWorld('electronAPI', {
     initiateSpotifyLogin: () =>
